@@ -19,7 +19,7 @@ class Cases extends Crypto_Controller {
 	
 	public function Accenture_download($filename)
 	{
-		$path = "/home/avds/assets/download/";
+		$path = "/home/crypto/assets/download/";
 		$path = $path.$filename;		
 		force_download($path, NULL);
 		
