@@ -2,7 +2,7 @@
     <div id="head_img">
     	<div class="head_img_inner">
 			<div class="head_text">
-				<p class="maintitle">AVDS News List</p>
+				<p class="maintitle">News List</p>
                 <p class="sub_text"></p>
 			</div>
         </div>   
