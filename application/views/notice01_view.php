@@ -2,8 +2,8 @@
     <div id="head_img">
     	<div class="head_img_inner">
 			<div class="head_text">
-				<p class="maintitle">공지사항</p>
-                <p class="sub_text">AVDS에 관련된 다양한 소식과 정보를 전달 드립니다.</p>
+				<p class="maintitle">Notice</p>
+                <p class="sub_text"></p>
 			</div>
         </div>   
     </div>
@@ -11,14 +11,14 @@
     <div id="container1">
     	<div class="tab">
             <div class="tab_box">
-                <div class="select"><img src="/assets/images/tan_icon01_on.png" alt=""/>이용문의</div>
+                <div class="select"><img src="/assets/images/tan_icon01_on.png" alt=""/>Request</div>
                 <div class="normal"><a href="/Notice/Notice_2"><img src="/assets/images/tan_icon02_off.png" alt=""/>뉴스</a></div>
 			</div>
 		</div>
         
         <div class="container1_inner">
             <div class="title">
-                <div class="s_title">이용문의</div>
+                <div class="s_title">Request</div>
                 <div class="line"></div>
             </div>
 
