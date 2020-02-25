@@ -73,8 +73,8 @@ class Support extends Crypto_Controller {
     	$partner_chx = $this->input->post('partner_chx');
     	
 
-    	if($securekey == '' || $securekey == ' �솻洹ｋ샍�뇡�쉮�닱筌뤾쑴�겱占쎈ご�뜝占� �뜝�럩肉��뜝�럩�졑�뜝�럥�돵 �썒�슣�닔�땻占썲뜝�럩�뭵.'){
-			echo("<script>alert('�솻洹ｋ샍�뇡占� 占쎈닱筌뤾쑴�겱占쎈ご�뜝占� �뜝�럩�꼪�뜝�럩逾ε뜝�럥�돵 �썒�슣�닔�땻占썲뜝�럩�뭵.');history.back();</script>");
+    	if($securekey == '' || $securekey == ' .'){
+			echo("<script>alert('.');history.back();</script>");
 			return false;
 		}
     	
@@ -83,7 +83,7 @@ class Support extends Crypto_Controller {
 
 		if($captchaword != $captcha_txt)
 		{
-			$msg = "�솻洹ｋ샍�뇡�쉮援쒒겫�뼔援→뤆�룊�삕 �뜝�룞�삕占쎈뎨占쎈윥占쎈퉵�뜝�럥堉�. �솻洹ｋ샍�뇡�쉮援쒒겫�뼔援∽옙紐닷뜝占� �뜝�럩�꼪�뜝�럩逾ε뜝�럥�돵 �썒�슣�닔�땻占썲뜝�럩�뭵";
+			$msg = "";
 			echo("<script>alert('$msg');</script>");
 			echo("<script>location.href='/Support';</script>");
 			exit;
@@ -111,7 +111,7 @@ class Support extends Crypto_Controller {
     	$this->load->model('Requests');
     	$this->Requests->save_request($data);
 		
-		$msg = "占쎈닱筌뤾쑴踰� �뜝�럩�뭵嶺뚳퐦�삕 �뜝�럩�걦占쎈쇀占쎌뒧�뵳釉앹삕�굢占썲뜝�럥裕멨뜝�럥鍮띶뜝�럥堉�.";
+		$msg = ".";
 		echo("<script>alert('$msg');</script>");
 		echo("<script>location.href='/main';</script>");
 	}
