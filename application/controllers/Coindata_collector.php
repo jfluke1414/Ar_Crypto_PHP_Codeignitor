@@ -4,13 +4,11 @@
 
 class Coindata_collector extends Crypto_Controller{
 
-	public function __construct()
-	{
+	public function __construct(){
 	    parent::__construct();
 	}
 	
-	public function index($ex_name)
-	{	    
+	public function index($ex_name){	    
 	    if($ex_name == 'exchange'){
 	     	$this->set_exchange_rate();
 	        print_r("collected exchange data");
@@ -22,8 +20,7 @@ class Coindata_collector extends Crypto_Controller{
 	            print_r("Collected coinone data");
 	        } else {
 	            print_r("Failed getting coinone data");
-	        }
-	         
+	        }	         
 	    }
 	    if($ex_name == 'coinfield'){
     		$coinfield = $this->get_coinfield_info();
@@ -104,11 +101,8 @@ class Coindata_collector extends Crypto_Controller{
 	    
 	    return $result;
 	}
-	
-	
-	
-	function get_coinone_info()
-	{
+
+	function get_coinone_info(){
 	    $coinone_url = 'https://api.coinone.co.kr/ticker/?currency="BTC"';	
 		
 	    $curl_handle=curl_init();	    
@@ -464,8 +458,7 @@ class Coindata_collector extends Crypto_Controller{
 	    return $datas;
 	}
 	
-	function get_exchange_info()
-	{
+	function get_exchange_info(){
 	    $this->load->model('Mains');
 	    $data = $this->Mains->get_exchange_rate();
 	    
