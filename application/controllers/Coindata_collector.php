@@ -6,12 +6,11 @@ class Coindata_collector extends Crypto_Controller{
 
 	public function __construct()
 	{
-		parent::__construct();
+	    parent::__construct();
 	}
 	
 	public function index($ex_name)
-	{
-	    
+	{	    
 	    if($ex_name == 'exchange'){
 	     	$this->set_exchange_rate();
 	        print_r("collected exchange data");
@@ -82,7 +81,6 @@ class Coindata_collector extends Crypto_Controller{
 	    }
 	}
 
-
 	function get_coin_info($ex_name){
 	    $this->load->model('Mains');
 	    $data = $this->Mains->get_coin_data($ex_name);
@@ -90,10 +88,7 @@ class Coindata_collector extends Crypto_Controller{
 	    return $data;
 	}
 	
-	
-	function save_coin_info($data)
-	{
-	    
+	function save_coin_info($data){	    
 	    if($data == null){
 	        $msg = "Please check data. It's probably empty.";
 	        echo("
@@ -103,8 +98,7 @@ class Coindata_collector extends Crypto_Controller{
 			</script>
 			");
 	        exit;
-	    }
-	    
+	    }	    
 	    $this->load->model('Mains');
 	    $result = $this->Mains->set_coin_data($data);
 	    
@@ -115,77 +109,43 @@ class Coindata_collector extends Crypto_Controller{
 	
 	function get_coinone_info()
 	{
-	    $coinone_url = 'https://api.coinone.co.kr/ticker/?currency="BTC"';
-	    
-	    $curl_handle=curl_init();
-	    
+	    $coinone_url = 'https://api.coinone.co.kr/ticker/?currency="BTC"';	
+		
+	    $curl_handle=curl_init();	    
 	    curl_setopt($curl_handle, CURLOPT_URL,$coinone_url);
 	    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
 	    curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
 	    curl_setopt($curl_handle, CURLOPT_USERAGENT, 'Your application name');
-	    // 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, FALSE);
-	    // 		curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, FALSE);
-	    
+
 	    $coinone_data = curl_exec($curl_handle);
-	    
-	    // 		if(curl_exec($curl_handle) === false)
-	        // 		{
-	        // 		    echo 'Curl error: ' . curl_error($curl_handle);
-	        // 		}
-	        // 		else
-	            // 		{
-	            // 		    echo 'Operation completed without any errors';
-	            // 		}
-	                
-	            curl_close($curl_handle);
-	            $data = json_decode($coinone_data);
+           	curl_close($curl_handle);
+           	$data = json_decode($coinone_data);
 	            
-	            $btc_arr = $data->btc;
-	            $eth_arr = $data->eth;
-	            $xrp_arr = $data->xrp;
-	            $ltc_arr = $data->ltc;
-	            $bch_arr = $data->bch;
-	            $pib_arr = $data->pib;
+           	$btc_arr = $data->btc;
+           	$eth_arr = $data->eth;
+           	$xrp_arr = $data->xrp;
+           	$ltc_arr = $data->ltc;
+           	$bch_arr = $data->bch;
+           	$pib_arr = $data->pib;
 	            
-	            $datas = array();
-	            
-	            
-	            $datas['btc_currency'] =  $btc_arr->currency;
-	            $datas['btc_last'] =  $btc_arr->last;
-	            
-	            
-	            
-	            
-	            $datas['eth_currency'] =  $eth_arr->currency;
-	            $datas['eth_last'] =  $eth_arr->last;
-	            
-	            
-	            
-	            $datas['xrp_currency'] =  $xrp_arr->currency;
-	            $datas['xrp_last'] =  $xrp_arr->last;
-	            
-	            
-	            
-	            $datas['ltc_currency'] =  $ltc_arr->currency;
-	            $datas['ltc_last'] =  $ltc_arr->last;
-	            
-	            
-	            $datas['bch_currency'] =  $bch_arr->currency;
-	            $datas['bch_last'] =  $bch_arr->last;
-	            
-	            
-	            
-	            $datas['pib_currency'] =  $pib_arr->currency;
-	            $datas['pib_last'] =  $pib_arr->last;
-	            
-	            
-	            $datas['exchange_name'] = "coinone";
-	            //var_dump($datas);
-	            return $datas;
+           	$datas = array();
+	        $datas['btc_currency'] =  $btc_arr->currency;
+	        $datas['btc_last'] =  $btc_arr->last;
+	        $datas['eth_currency'] =  $eth_arr->currency;
+	        $datas['eth_last'] =  $eth_arr->last;
+	        $datas['xrp_currency'] =  $xrp_arr->currency;
+	        $datas['xrp_last'] =  $xrp_arr->last;
+	        $datas['ltc_currency'] =  $ltc_arr->currency;
+	        $datas['ltc_last'] =  $ltc_arr->last;
+	        $datas['bch_currency'] =  $bch_arr->currency;
+	        $datas['bch_last'] =  $bch_arr->last;
+	        $datas['pib_currency'] =  $pib_arr->currency;
+	        $datas['pib_last'] =  $pib_arr->last;
+	        $datas['exchange_name'] = "coinone";
+	        return $datas;
 	}
 	
-	function get_coinfield_info()
-	{
+	function get_coinfield_info(){
 	    $coinfield = 'https://api.coinfield.com/v1/tickers';
 	    
 	    $curl_handle=curl_init();
@@ -206,41 +166,31 @@ class Coindata_collector extends Crypto_Controller{
 	            $datas['btc_currency'] =  "btc";
 	            $datas['btc_last'] =  $list->last;
 	        }
-	        
 	        if($list->market == "ethcad"){
 	            $datas['eth_currency'] =  "eth";
 	            $datas['eth_last'] =  $list->last;
 	        }
-	        
 	        if($list->market == "xrpcad"){
 	            $datas['xrp_currency'] =  "xrp";
 	            $datas['xrp_last'] =  $list->last;
 	        }
-	        
 	        if($list->market == "ltccad"){
 	            $datas['ltc_currency'] =  "ltc";
 	            $datas['ltc_last'] =  $list->last;
 	        }
-	        
 	        if($list->market == "bchcad"){
 	            $datas['bch_currency'] =  "bch";
 	            $datas['bch_last'] =  $list->last;
 	        }
-	        
 	        if($list->market == "dashcad"){
 	            $datas['dash_currency'] =  "dash";
 	            $datas['dash_last'] =  $list->last;
 	        }
-	        
 	    };
-	    
 	    return $datas;
 	}
 	
-	
-	function get_huobi_info()
-	{
-	    
+	function get_huobi_info(){
 	    $huobi = 'https://api.huobi.pro/market/tickers';
 	    
 	    $curl_handle=curl_init();
@@ -252,44 +202,35 @@ class Coindata_collector extends Crypto_Controller{
 	    curl_close($curl_handle);
 	    
 	    $data = json_decode($query);
-	    
 	    $datas = array();
-	    
 	    $datas['exchange_name'] = "huobi";
 	    foreach ($data->data as $list){
-	        
 	        if($list->symbol == "btcusdt"){
 	            $datas['btc_currency'] =  "btc";
 	            $datas['btc_last'] =  $list->close;
 	        }
-	        
 	        if($list->symbol == "ethusdt"){
 	            $datas['eth_currency'] =  "eth";
 	            $datas['eth_last'] =  $list->close;
 	        }
-	        
 	        if($list->symbol == "xrpusdt"){
 	            $datas['xrp_currency'] =  "xrp";
 	            $datas['xrp_last'] =  $list->close;
 	        }
-	        
 	        if($list->symbol == "dashusdt"){
 	            $datas['dash_currency'] =  "dash";
 	            $datas['dash_last'] =  $list->close;
 	        }
-	        
 	        if($list->symbol == "bchusdt"){
 	            $datas['bch_currency'] =  "bch";
 	            $datas['bch_last'] =  $list->close;
 	        }
 	    };
-	    
 	    return $datas;
 	}
 	
 	
-	function get_upbit_info()
-	{
+	function get_upbit_info(){
 	    $upbit_btc = 'https://api.upbit.com/v1/ticker?markets=KRW-BTC';
 	    
 	    $curl_handle=curl_init();
@@ -301,13 +242,11 @@ class Coindata_collector extends Crypto_Controller{
 	    curl_close($curl_handle);
 	    
 	    $btc_data = json_decode($query);
-	    
 	    $datas = array();
-	    
 	    $datas['exchange_name'] = "upbit";
 	    foreach ($btc_data as $list){	        
-            $datas['btc_currency'] =  "btc";
-            $datas['btc_last'] =  $list->trade_price;	        
+		$datas['btc_currency'] =  "btc";
+		$datas['btc_last'] =  $list->trade_price;	        
 	    };
 	    
 	    $upbit_eth = 'https://api.upbit.com/v1/ticker?markets=KRW-ETH';
@@ -323,8 +262,8 @@ class Coindata_collector extends Crypto_Controller{
 	    $eth_data = json_decode($query);
 	    
 	    foreach ($eth_data as $list){
-            $datas['eth_currency'] =  "eth";
-            $datas['eth_last'] =  $list->trade_price;
+               $datas['eth_currency'] =  "eth";
+               $datas['eth_last'] =  $list->trade_price;
 	    };
 	    
 	    $upbit_xrp = 'https://api.upbit.com/v1/ticker?markets=KRW-XRP';
@@ -340,8 +279,8 @@ class Coindata_collector extends Crypto_Controller{
 	    $xrp_data = json_decode($query);
 	    
 	    foreach ($xrp_data as $list){	        
-            $datas['xrp_currency'] =  "xrp";
-            $datas['xrp_last'] =  $list->trade_price;	        
+               $datas['xrp_currency'] =  "xrp";
+               $datas['xrp_last'] =  $list->trade_price;	        
 	    };
 	    
 	    $upbit_qtum = 'https://api.upbit.com/v1/ticker?markets=KRW-QTUM';
@@ -379,13 +318,10 @@ class Coindata_collector extends Crypto_Controller{
             $datas['snt_currency'] =  "snt";
             $datas['snt_last'] =  $list->trade_price;	        
 	    };
-	    
 	    return $datas;
 	}
 
-	function get_bithumb_info()
-	{
-	    
+	function get_bithumb_info(){
 	    $bithumb_all = 'https://api.bithumb.com/public/ticker/all';
 	    $datas = array();
 	    
@@ -404,9 +340,7 @@ class Coindata_collector extends Crypto_Controller{
 	    $btc_arr = $list->BTC;
 	    $eth_arr = $list->ETH;
 	    $xrp_arr = $list->XRP;
-	    
-	    
-	    
+
 	    $datas['exchange_name'] = "bithumb";
 	    $datas['btc_currency'] =  "btc";
 	    $datas['btc_last'] =  $btc_arr->prev_closing_price;
@@ -421,7 +355,6 @@ class Coindata_collector extends Crypto_Controller{
 	}
 	
 	function get_bittrex_info(){
-	    
 	    $bittrex_btc = 'https://api.bittrex.com/api/v1.1/public/getticker?market=USD-BTC';
 	    
 	    $datas = array();
@@ -457,9 +390,7 @@ class Coindata_collector extends Crypto_Controller{
 	    $datas['eth_currency'] =  "eth";
 	    $datas['eth_last'] =  $list->Last;
 	    
-	    
 	    $bittrex_xrp = 'https://api.bittrex.com/api/v1.1/public/getticker?market=USD-XRP';
-	    
 	    $curl_handle=curl_init();
 	    curl_setopt($curl_handle, CURLOPT_URL,$bittrex_xrp);
 	    curl_setopt($curl_handle, CURLOPT_CONNECTTIMEOUT, 2);
@@ -475,11 +406,9 @@ class Coindata_collector extends Crypto_Controller{
 	    $datas['xrp_last'] =  $list->Last;
 	    
 	    return $datas;
-	    
 	}
 	
 	function get_poloniex_info(){
-	    
 	    $poloniex_all = 'https://poloniex.com/public?command=returnTicker';
 	    
 	    $datas = array();
@@ -512,14 +441,10 @@ class Coindata_collector extends Crypto_Controller{
 	        $datas['xrp_currency'] =  "xrp";
 	        $datas['xrp_last'] =  $xrp->last;
 	    }
-	    
 	    return $datas;
-	    
 	}
 	
-	function set_exchange_rate()
-	{
-	    
+	function set_exchange_rate(){
 	    $exchange_url = 'https://free.currconv.com/api/v7/convert?q=cad_krw,usd_krw&compact=ultra&apiKey=1b2360cf16ac589201bc';
 	    $datas = array();
 	    
@@ -546,5 +471,4 @@ class Coindata_collector extends Crypto_Controller{
 	    
 	    return $data;
 	}
-	
 }
