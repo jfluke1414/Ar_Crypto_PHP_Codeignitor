@@ -13,20 +13,18 @@ class Musers extends CI_Model {
     	$username = $this->security->xss_clean($this->input->post('user_id'));
 	$password = $this->security->xss_clean($this->input->post('user_pw'));		
 	$ecryp_pw = sha1($password);	
-            if(empty($username) || empty($password))
-	        return false;		
-		$this->db->where('user_id', $username);
-		$this->db->where('user_pw', $ecryp_pw);
-		$query = $this->db->get('user');
-	
-	    if($query->num_rows() == 1)
-	    {
-	        $row = $query->row();
-		    $data = array(
-		    'isuser' => true,
-		    'user_id' => $row->user_id,
-		    'user_name' => $row->user_name										
-	        );
+        if(empty($username) || empty($password)){
+	    return false;		
+	    $this->db->where('user_id', $username);
+	    $this->db->where('user_pw', $ecryp_pw);
+	    $query = $this->db->get('user');
+	}
+	if($query->num_rows() == 1){
+	    $row = $query->row();
+	        $data = array(
+		'user_id' => $row->user_id,
+		'user_name' => $row->user_name										
+	    );
 	    $this->session->set_userdata($data);
 	    return true;
 	}
