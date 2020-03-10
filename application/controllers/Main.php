@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Main extends Crypto_Controller {
 
-	public function __construct()
-	{
+	public function __construct(){
 	    parent::__construct();
 	    $this->init();
 	}
@@ -14,8 +13,7 @@ class Main extends Crypto_Controller {
 	    $this->_header_dialog();
 	}
 	
-	public function index()
-	{		
+	public function index(){		
 	    //exchange
 	    $data['exchange'] = $this->get_exchange_info();
 
