@@ -6,8 +6,7 @@ class Cases extends Crypto_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('download');
-		
+		$this->load->helper('download');		
 	}
 	
 	public function index()
@@ -32,10 +31,8 @@ class Cases extends Crypto_Controller {
 		$path = "/assets/download/".$file;
 
 		$data['path'] = $path;
-		$this->load->view('pdf_view', $data);
-		
+		$this->load->view('pdf_view', $data);		
 	}
-	
-	
+		
 }
 
