@@ -3,8 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Functions extends Crypto_Controller {
 
-	public function __construct()
-	{
+	public function __construct(){
 	    parent::__construct();
 	    $this->init();	
 	}
@@ -14,8 +13,7 @@ class Functions extends Crypto_Controller {
 	    $this->_header_dialog();
 	}
 	
-	public function index()
-	{				
+	public function index(){				
 	    if($this->session->userdata('user_id')){
 	        $substracted_arr = $this->get_user_coin();	        
 	    } else {
@@ -173,8 +171,7 @@ class Functions extends Crypto_Controller {
 	        'dash_rate' => $dash_rate,
 	        'pib_rate' => $pib_rate,
 	        'qtum_rate' => $qtum_rate,
-	        'snt_rate' => $snt_rate
-	        
+	        'snt_rate' => $snt_rate	        
 	    );	    
 	    return $substracted_arr;
 	}
@@ -296,99 +293,99 @@ class Functions extends Crypto_Controller {
 	    echo json_encode(array('status' => 'success', 'message' => 'ss', 'data' => $substracted_arr));
 	    exit;
 	}
-}
+    }
 
-function get_data_selected_submit(){    
-    $btc_count = $this->input->post('btc_count');
-    $eth_count = $this->input->post('eth_count');
-    $xrp_count = $this->input->post('xrp_count');
-    $ltc_count = $this->input->post('ltc_count');
-    $bch_count = $this->input->post('bch_count');
-    $dash_count = $this->input->post('dash_count');
-    $pib_count = $this->input->post('pib_count');
+    function get_data_selected_submit(){    
+        $btc_count = $this->input->post('btc_count');
+        $eth_count = $this->input->post('eth_count');
+        $xrp_count = $this->input->post('xrp_count');
+        $ltc_count = $this->input->post('ltc_count');
+        $bch_count = $this->input->post('bch_count');
+        $dash_count = $this->input->post('dash_count');
+        $pib_count = $this->input->post('pib_count');
     
-    if($btc_count == null){
-        $btc_count = 0;
-    }
-    if($eth_count == null){
-        $eth_count = 0;
-    }
-    if($xrp_count == null){
-        $xrp_count = 0;
-    }
-    if($ltc_count == null){
-        $ltc_count = 0;
-    }
-    if($bch_count == null){
-        $bch_count = 0;
-    }
-    if($dash_count == null){
-        $dash_count = 0;
-    }
-    if($pib_count == null){
-        $pib_count = 0;
-    }
+        if($btc_count == null){
+            $btc_count = 0;
+        }
+        if($eth_count == null){
+            $eth_count = 0;
+        }
+        if($xrp_count == null){
+            $xrp_count = 0;
+        }
+        if($ltc_count == null){
+            $ltc_count = 0;
+        }
+        if($bch_count == null){
+            $bch_count = 0;
+        }
+        if($dash_count == null){
+            $dash_count = 0;
+        }
+        if($pib_count == null){
+            $pib_count = 0;
+        }
     
-    $this->load->model('Mfunctions');
-    $coin_data = $this->Mfunctions->get_coininfo_selected();
+        $this->load->model('Mfunctions');
+        $coin_data = $this->Mfunctions->get_coininfo_selected();
 
-    $currency_btc = 'btc';
-    $currency_eth = 'eth';
-    $currency_xrp = 'xrp';
-    $currency_ltc = 'ltc';
-    $currency_bch = 'bch';
-    $currency_dash = 'dash';
-    $currency_pib = 'pib';
+        $currency_btc = 'btc';
+        $currency_eth = 'eth';
+        $currency_xrp = 'xrp';
+        $currency_ltc = 'ltc';
+        $currency_bch = 'bch';
+        $currency_dash = 'dash';
+        $currency_pib = 'pib';
     
-    $sum_btc = 0;
-    $sum_eth = 0;
-    $sum_xrp = 0;
-    $sum_ltc = 0;
-    $sum_bch = 0;
-    $sum_dash = 0;
-    $sum_pib = 0;
+        $sum_btc = 0;
+        $sum_eth = 0;
+        $sum_xrp = 0;
+        $sum_ltc = 0;
+        $sum_bch = 0;
+        $sum_dash = 0;
+        $sum_pib = 0;
 	
-    foreach($coin_data as $list){
-        if($list->currency == 'btc'){
-            $sum_btc = $list->price * $btc_count;
+        foreach($coin_data as $list){
+            if($list->currency == 'btc'){
+                $sum_btc = $list->price * $btc_count;
+            }
+            if($list->currency == 'eth'){
+                $sum_eth = $list->price * $eth_count;
+            }
+            if($list->currency == 'xrp'){
+                $sum_xrp = $list->price * $xrp_count;
+            }
+            if($list->currency == 'ltc'){
+                $sum_ltc = $list->price * $ltc_count;
+            }
+            if($list->currency == 'bch'){
+                $sum_bch = $list->price * $bch_count;
+            }
+            if($list->currency == 'dash'){
+                $sum_dash = $list->price * $dash_count;
+            }
+            if($list->currency == 'pib'){
+                $sum_pib = $list->price * $pib_count;
+            }
         }
-        if($list->currency == 'eth'){
-            $sum_eth = $list->price * $eth_count;
-        }
-        if($list->currency == 'xrp'){
-            $sum_xrp = $list->price * $xrp_count;
-        }
-        if($list->currency == 'ltc'){
-            $sum_ltc = $list->price * $ltc_count;
-        }
-        if($list->currency == 'bch'){
-            $sum_bch = $list->price * $bch_count;
-        }
-        if($list->currency == 'dash'){
-            $sum_dash = $list->price * $dash_count;
-        }
-        if($list->currency == 'pib'){
-            $sum_pib = $list->price * $pib_count;
-        }
-    }
 
-    $substracted_arr = array(
-        'currency_btc' => $currency_btc,
-        'currency_eth'=> $currency_eth,
-        'currency_xrp'=> $currency_xrp,
-        'currency_ltc' => $currency_ltc,
-        'currency_bch'=> $currency_bch,
-        'currency_dash' => $currency_dash,
-        'currency_pib'=> $currency_pib,
+        $substracted_arr = array(
+            'currency_btc' => $currency_btc,
+            'currency_eth'=> $currency_eth,
+            'currency_xrp'=> $currency_xrp,
+            'currency_ltc' => $currency_ltc,
+            'currency_bch'=> $currency_bch,
+            'currency_dash' => $currency_dash,
+            'currency_pib'=> $currency_pib,
         
-        'sum_btc' => $sum_btc,
-        'sum_eth' => $sum_eth,
-        'sum_xrp' => $sum_xrp,
-        'sum_ltc' => $sum_ltc,
-        'sum_bch' => $sum_bch,
-        'sum_dash' => $sum_dash,
-        'sum_pib' => $sum_pib
-    );
-    $data['subtracted_list'] = $substracted_arr;
-    $this->load->view('function_view', $data);
-}
+            'sum_btc' => $sum_btc,
+            'sum_eth' => $sum_eth,
+            'sum_xrp' => $sum_xrp,
+            'sum_ltc' => $sum_ltc,
+            'sum_bch' => $sum_bch,
+            'sum_dash' => $sum_dash,
+            'sum_pib' => $sum_pib
+        );
+        $data['subtracted_list'] = $substracted_arr;
+        $this->load->view('function_view', $data);
+    }
