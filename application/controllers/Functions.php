@@ -5,7 +5,7 @@ class Functions extends Crypto_Controller {
 
 	public function __construct()
 	{
-		parent::__construct();
+	    parent::__construct();
 	    $this->init();	
 	}
 	
@@ -16,7 +16,6 @@ class Functions extends Crypto_Controller {
 	
 	public function index()
 	{				
-
 	    if($this->session->userdata('user_id')){
 	        $substracted_arr = $this->get_user_coin();	        
 	    } else {
@@ -61,16 +60,13 @@ class Functions extends Crypto_Controller {
 	            'qtum_rate' => null,
 	            'snt_rate' => null
 	        );
-	    }
-        	    
+	    }        	    
 	    $data['subtracted_list'] = $substracted_arr;
-
-		$this->load->view('function_view', $data);
-		$this->_footer();
+	    $this->load->view('function_view', $data);
+	    $this->_footer();
 	}
 	
-	function get_user_coin(){
-	    
+	function get_user_coin(){	    
 	    $this->load->model('Musers');
 	    $result = $this->Musers->get_user_coin();
 	    
@@ -138,8 +134,7 @@ class Functions extends Crypto_Controller {
 	        }
 	    }
 	    
-	    $substracted_arr = array(
-	        
+	    $substracted_arr = array(	        
 	        'currency_btc' => $currency_btc,
 	        'currency_eth'=> $currency_eth,
 	        'currency_xrp'=> $currency_xrp,
@@ -181,13 +176,10 @@ class Functions extends Crypto_Controller {
 	        'snt_rate' => $snt_rate
 	        
 	    );	    
-	    
 	    return $substracted_arr;
-	    
 	}
 	
-	function get_data_selected_ajax(){
-	    
+	function get_data_selected_ajax(){	    
 	    $btc_count = $this->input->post('btc_count');
 	    $eth_count = $this->input->post('eth_count');
 	    $xrp_count = $this->input->post('xrp_count');
@@ -240,7 +232,6 @@ class Functions extends Crypto_Controller {
 	    $currency_snt = 'snt';
 	    
 	    foreach($coin_data as $list){
-
 	        if($list->currency == 'btc'){
 	            $sum_btc = $list->price * $btc_count;
 	        }
@@ -271,7 +262,6 @@ class Functions extends Crypto_Controller {
 	    }
 	    
 	    $substracted_arr = array(
-	        
 	        'currency_btc' => $currency_btc,
 	        'currency_eth'=> $currency_eth,
 	        'currency_xrp'=> $currency_xrp,
@@ -301,40 +291,14 @@ class Functions extends Crypto_Controller {
 	        'pib_count' => $pib_count,
 	        'qtum_count' => $qtum_count,
 	        'snt_count' => $snt_count
-	        
 	    );	    
 	    $data['subtracted_list'] = $substracted_arr;
-	    
 	    echo json_encode(array('status' => 'success', 'message' => 'ss', 'data' => $substracted_arr));
 	    exit;
 	}
-	
-	
-	
-	
-	
-// 	function set_text_area(){
-	    
-// 	    $load->Model('Mfunctions');
-// 	    $this->Mfunctions->get_coininfo_selected();
-	    
-//         $data['text_list'] = $text_list;
-	    
-// 	    //$this->load->view('functions_view', $data);
-	    
-// 	    echo json_encode(array('status' => 'success','message'=> 'ss', 'btc' => $btc));
-// 	    exit;
-// 	}
-
 }
 
-
-
-
-
-
-function get_data_selected_submit(){
-    
+function get_data_selected_submit(){    
     $btc_count = $this->input->post('btc_count');
     $eth_count = $this->input->post('eth_count');
     $xrp_count = $this->input->post('xrp_count');
@@ -367,9 +331,7 @@ function get_data_selected_submit(){
     
     $this->load->model('Mfunctions');
     $coin_data = $this->Mfunctions->get_coininfo_selected();
-    
-    //var_dump($coin_data);
-    
+
     $currency_btc = 'btc';
     $currency_eth = 'eth';
     $currency_xrp = 'xrp';
@@ -385,37 +347,8 @@ function get_data_selected_submit(){
     $sum_bch = 0;
     $sum_dash = 0;
     $sum_pib = 0;
-    
-    
-    // 	    echo $btc_count;
-    // 	    echo $eth_count;
-    // 	    echo $ltc_count;
-    // 	    echo $xrp_count;
-    // 	    echo $bch_count;
-    // 	    echo $dash_count;
-    // 	    echo $pib_count;
-    
-    
+	
     foreach($coin_data as $list){
-        
-        
-        // 	        $btc_count!=0 ? $currency_btc = $list->currency : $currency_btc = 'btc';
-        // 	        $eth_count!=0 ? $currency_eth = $list->currency : $currency_eth = 'eth';
-        // 	        $xrp_count!=0 ? $currency_xrp = $list->currency : $currency_xrp = 'xrp';
-        // 	        $ltc_count!=0 ? $currency_ltc = $list->currency : $currency_ltc = 'ltc';
-        // 	        $bch_count!=0 ? $currency_bch = $list->currency : $currency_bch = 'bch';
-        // 	        $dash_count!=0 ? $currency_dash = $list->currency : $currency_dash = 'dash';
-        // 	        $pib_count!=0 ? $currency_pib = $list->currency : $currency_pib = 'pib';
-        
-        // 	        $list->currency=='btc' ? $sum_btc = $list->price : $sum_btc = 0;
-        // 	        $list->currency=='eth' ? $sum_eth = $list->price : $sum_eth = 0;
-        // 	        $list->currency=='xrp' ? $sum_xrp = $list->price : $sum_xrp = 0;
-        // 	        $list->currency=='ltc' ? $sum_ltc = $list->price : $sum_ltc = 0;
-        // 	        $list->currency=='bch' ? $sum_bch = $list->price : $sum_bch = 0;
-        // 	        $list->currency=='dash' ? $sum_dash = $list->price : $sum_dash = 0;
-        // 	        $list->currency=='pib' ? $sum_pib = $list->price : $sum_pib = 0;
-        
-        
         if($list->currency == 'btc'){
             $sum_btc = $list->price * $btc_count;
         }
@@ -438,19 +371,8 @@ function get_data_selected_submit(){
             $sum_pib = $list->price * $pib_count;
         }
     }
-    
-    
-    // 	    echo $sum_btc;
-    // 	    echo $sum_eth;
-    // 	    echo $sum_xrp;
-    // 	    echo $sum_ltc;
-    // 	    echo $sum_bch;
-    // 	    echo $sum_dash;
-    // 	    echo $sum_pib;
-    
-    
+
     $substracted_arr = array(
-        
         'currency_btc' => $currency_btc,
         'currency_eth'=> $currency_eth,
         'currency_xrp'=> $currency_xrp,
@@ -466,16 +388,7 @@ function get_data_selected_submit(){
         'sum_bch' => $sum_bch,
         'sum_dash' => $sum_dash,
         'sum_pib' => $sum_pib
-        
     );
-    
     $data['subtracted_list'] = $substracted_arr;
-    
     $this->load->view('function_view', $data);
-    //echo("<script>history.back();</script>");
-    // 	    echo("<script>location.href='Functions/';</script>");
-    
-    
-    // 	    echo json_encode(array('status' => 'success','message'=> 'ss', 'btc' => 'a'));
-    // 	    exit;
 }
