@@ -3,14 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Support extends Crypto_Controller {
 
-	public function __construct()
-	{
+	public function __construct(){
 		parent::__construct();
 		$this->load->helper('captcha');		
 	}
 	
-	public function index()
-	{		
+	public function index(){		
 	    echo("<script>alert('Sorry, Coming soon.');history.back();</script>");
 	}
 	
@@ -81,5 +79,5 @@ class Support extends Crypto_Controller {
 	    echo("<script>alert('$msg');</script>");
 	    echo("<script>location.href='/main';</script>");
 	}
-}
+    }
 
