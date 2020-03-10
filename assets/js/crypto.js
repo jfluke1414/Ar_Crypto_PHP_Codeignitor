@@ -43,7 +43,6 @@ function login_form_Function(){
 	return true;
 }
 
-
 function ckeck_logout_Function(){	
     var answer = confirm('Are you sure log-out?');
 	if(answer)
@@ -96,7 +95,6 @@ $(function() {
 	      draggable: true,			  
 	});
 		
-
     $( ".coin_select" ).button().on( "click", function() {
 	dialog_functioni_coin_check.dialog( "open" );
     });	
@@ -158,7 +156,7 @@ $(function() {
 	    data        : dataString,  
 	    dataType    : "json",
 	    encode      : true,
-		    success : function(data){
+	    success : function(data){
 			alert(data.message);
 			window.location.reload();
 		    },
@@ -189,7 +187,7 @@ $(function() {
 	    data        : dataString,  
 	    dataType    : "json",
 	    encode      : true,
-		    success : function(data){			    	
+	    success : function(data){			    	
 			if(data.status == "success"){
 				alert(data.message);
 			}
@@ -230,7 +228,7 @@ $(function() {
 	    data        : dataString,
 	    dataType    : "json",
 	    encode      : true,
-		    success : function(data){
+	    success : function(data){
 			if(data.status == "success"){			    		
 				if(data.data == false){
 					alert('No result, Please check ID or PW');
@@ -294,7 +292,7 @@ $(function() {
 	    data        : dataString,  
 	    dataType    : "json",
 	    encode      : true,
-		    success : function(data){
+	    success : function(data){
 			alert(data.message);
 			user_coin_setting.dialog("close");
 			window.location.reload();
@@ -532,7 +530,7 @@ $(function() {
 					}
 				    }
 				});
-			}
+			   }
 		    },
 		    error : function(results){
 		    alert(results.message);
@@ -591,264 +589,262 @@ $(function() {
 	}
     });
 
+    $( ".fucntion_setting_coin" ).button().on( "click", function() {
 
-	$( ".fucntion_setting_coin" ).button().on( "click", function() {
+	var btc = $('input:checkbox[id="setting_btc_chk"]').is(":checked");
+	var eth = $('input:checkbox[id="setting_eth_chk"]').is(":checked");
+	var xrp = $('input:checkbox[id="setting_xrp_chk"]').is(":checked");
+	var ltc = $('input:checkbox[id="setting_ltc_chk"]').is(":checked");
+	var bch = $('input:checkbox[id="setting_bch_chk"]').is(":checked");
+	var dash = $('input:checkbox[id="setting_dash_chk"]').is(":checked");
+	var pib = $('input:checkbox[id="setting_pib_chk"]').is(":checked");
+	var qtum = $('input:checkbox[id="setting_qtum_chk"]').is(":checked");
+	var snt = $('input:checkbox[id="setting_snt_chk"]').is(":checked");
+	var dataString = null;
 
-		var btc = $('input:checkbox[id="setting_btc_chk"]').is(":checked");
-		var eth = $('input:checkbox[id="setting_eth_chk"]').is(":checked");
-		var xrp = $('input:checkbox[id="setting_xrp_chk"]').is(":checked");
-		var ltc = $('input:checkbox[id="setting_ltc_chk"]').is(":checked");
-		var bch = $('input:checkbox[id="setting_bch_chk"]').is(":checked");
-		var dash = $('input:checkbox[id="setting_dash_chk"]').is(":checked");
-		var pib = $('input:checkbox[id="setting_pib_chk"]').is(":checked");
-		var qtum = $('input:checkbox[id="setting_qtum_chk"]').is(":checked");
-		var snt = $('input:checkbox[id="setting_snt_chk"]').is(":checked");
-		var dataString = null;
+	$.ajax({
+	    type        : "POST",
+	    url         : "User/get_user_setting",
+	    data        : dataString,  
+	    dataType    : "json",
+	    encode      : true,
+	    success : function(data){
+			var i;
+			var ar = data.coin_kind;	    	          	
+			var ex_ar = new Array();
+			ex_ar = data.ex_kind;
 
-		$.ajax({
-		    type        : "POST",
-		    url         : "User/get_user_setting",
-		    data        : dataString,  
-		    dataType    : "json",
-		    encode      : true,
-		    success : function(data){
-				var i;
-				var ar = data.coin_kind;	    	          	
-				var ex_ar = new Array();
-				ex_ar = data.ex_kind;
+			console.log(data.coin_kind.length);
+			console.log(ex_ar);
+				for(var a=0;a<ex_ar.length;a++){
+					alert('a');
+				for(var q=0;q<ex_ar[a].length;q++){
+					alert(ex_ar[a][q]);
+				}
+			}
+			$('#select_coin_btc_checked').remove();
+			$('#select_coin_eth_checked').remove();
+			$('#select_coin_xrp_checked').remove();
+			$('#select_coin_ltc_checked').remove();
+			$('#select_coin_bch_checked').remove();
+			$('#select_coin_dash_checked').remove();
+			$('#select_coin_pib_checked').remove();
+			$('#select_coin_qtum_checked').remove();
+			$('#select_coin_snt_checked').remove();
+			if(btc == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'btc'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-				console.log(data.coin_kind.length);
-				console.log(ex_ar);
-					for(var a=0;a<ex_ar.length;a++){
-						alert('a');
-					for(var q=0;q<ex_ar[a].length;q++){
-						alert(ex_ar[a][q]);
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				$('#select_coin_btc_checked').remove();
-				$('#select_coin_eth_checked').remove();
-				$('#select_coin_xrp_checked').remove();
-				$('#select_coin_ltc_checked').remove();
-				$('#select_coin_bch_checked').remove();
-				$('#select_coin_dash_checked').remove();
-				$('#select_coin_pib_checked').remove();
-				$('#select_coin_qtum_checked').remove();
-				$('#select_coin_snt_checked').remove();
-				if(btc == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'btc'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
-					}
+				$("#setting_coin_chk_btc").append('');
+			}
+			if(eth == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'eth'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-					$("#setting_coin_chk_btc").append('');
-				}
-				if(eth == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'eth'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
-
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
-					}
-					$("#setting_coin_chk_eth").append('');
-				}
-				if(xrp == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'xrp'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
-
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
-					}	
-				}
-				if(ltc == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'ltc'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
-
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				if(bch == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'bch'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+				$("#setting_coin_chk_eth").append('');
+			}
+			if(xrp == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'xrp'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
+					}
+				}	
+			}
+			if(ltc == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'ltc'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				if(dash == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'dash'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+			}
+			if(bch == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'bch'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				if(pib == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'pib'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+			}
+			if(dash == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'dash'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				if(qtum == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'qtum'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+			}
+			if(pib == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'pib'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-				if(snt == true){
-					for(i=0;i<ar.length;i++){
-						if(ar[i] == 'snt'){
-							$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
-							+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+			}
+			if(qtum == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'qtum'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
 
-							+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
-							+'<option>coinone</option>'
-							+'<option>coinfield</option>'
-							+'<option>huobi</option>'
-							+'<option>bithumb</option>'
-							+'<option>upbit</option>'
-							+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
-						}
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
 					}
 				}
-  			    user_coin_setting.dialog("open");
-			    },
-		    error : function(data){
-		    alert(data.message);
+			}
+			if(snt == true){
+				for(i=0;i<ar.length;i++){
+					if(ar[i] == 'snt'){
+						$('#coin_setting').append('<div id="select_coin_'+ar[i]+'_checked"><table width="490" border="0" cellspacing="0" cellpadding="0">'
+						+'<fieldset><legend></legend><label for="'+ar[i]+'" style="width:55px;margin-right:10px;">'+ar[i].toUpperCase()+'</label>'
+
+						+'<select name="ex_'+ar[i]+'" id="ex_'+ar[i]+'">'
+						+'<option>coinone</option>'
+						+'<option>coinfield</option>'
+						+'<option>huobi</option>'
+						+'<option>bithumb</option>'
+						+'<option>upbit</option>'
+						+'</select><div id="setting_'+ar[i]+'_text"><input type="number" id="setting_'+ar[i]+'_count" name="setting_'+ar[i]+'_count" width="50" height="10" min="0" max="1000" style="width:200px"></div></fieldset></div></div>');	
+					}
+				}
+			}
+		    user_coin_setting.dialog("open");
+		    },
+	        error : function(data){
+	        alert(data.message);
+	        }   
+          })
+    });
+
+    $( ".fucntion_setting_save_coin" ).button().on( "click", function() {
+	var btc_count = $('#setting_btc_count').val();
+	var eth_count = $('#setting_eth_count').val();
+	var xrp_count = $('#setting_xrp_count').val();
+	var ltc_count = $('#setting_ltc_count').val();
+	var bch_count = $('#setting_bch_count').val();
+	var dash_count = $('#setting_dash_count').val();
+	var pib_count = $('#setting_pib_count').val();
+	var qtum_count = $('#setting_qtum_count').val();
+	var snt_count = $('#setting_snt_count').val();
+
+	if(btc_count == null){
+		btc_count=0;
+	}
+	if(eth_count == null){
+		eth_count=0;
+	}
+	if(xrp_count == null){
+		xrp_count=0;
+	}
+	if(ltc_count == null){
+		ltc_count=0;
+	}
+	if(bch_count == null){
+		bch_count=0;
+	}
+	if(dash_count == null){
+		dash_count=0;
+	}
+	if(pib_count == null){
+		pib_count=0;
+	}
+	if(qtum_count == null){
+		qtum_count=0;
+	}
+	if(snt_count == null){
+		snt_count=0;
+	}
+
+	var dataString = 'btc_count='+ btc_count +'&eth_count='+ eth_count + '&xrp_count='+ xrp_count+'&ltc_count='+ltc_count+
+	'&bch_count='+ bch_count +'&dash_count='+ dash_count +'&pib_count='+pib_count+'&qtum_count='+qtum_count+
+	'&snt_count='+snt_count;
+
+	$.ajax({
+	    type        : "POST",
+	    url         : "User/save_data_selected_ajax",
+	    data        : dataString,  
+	    dataType    : "json",
+	    encode      : true,
+	    success : function(data){
+			alert(data.message);
+			user_coin_setting.dialog("close");
+			window.location.reload();
+		    },
+		    error : function(results){
+		    alert(results.message);
 		    }   
-	      })
-	});
-
-	$( ".fucntion_setting_save_coin" ).button().on( "click", function() {
-		var btc_count = $('#setting_btc_count').val();
-		var eth_count = $('#setting_eth_count').val();
-		var xrp_count = $('#setting_xrp_count').val();
-		var ltc_count = $('#setting_ltc_count').val();
-		var bch_count = $('#setting_bch_count').val();
-		var dash_count = $('#setting_dash_count').val();
-		var pib_count = $('#setting_pib_count').val();
-		var qtum_count = $('#setting_qtum_count').val();
-		var snt_count = $('#setting_snt_count').val();
-
-		if(btc_count == null){
-			btc_count=0;
-		}
-		if(eth_count == null){
-			eth_count=0;
-		}
-		if(xrp_count == null){
-			xrp_count=0;
-		}
-		if(ltc_count == null){
-			ltc_count=0;
-		}
-		if(bch_count == null){
-			bch_count=0;
-		}
-		if(dash_count == null){
-			dash_count=0;
-		}
-		if(pib_count == null){
-			pib_count=0;
-		}
-		if(qtum_count == null){
-			qtum_count=0;
-		}
-		if(snt_count == null){
-			snt_count=0;
-		}
-
-		var dataString = 'btc_count='+ btc_count +'&eth_count='+ eth_count + '&xrp_count='+ xrp_count+'&ltc_count='+ltc_count+
-		'&bch_count='+ bch_count +'&dash_count='+ dash_count +'&pib_count='+pib_count+'&qtum_count='+qtum_count+
-		'&snt_count='+snt_count;
-
-		$.ajax({
-		    type        : "POST",
-		    url         : "User/save_data_selected_ajax",
-		    data        : dataString,  
-		    dataType    : "json",
-		    encode      : true,
-		    success : function(data){
-				alert(data.message);
-				user_coin_setting.dialog("close");
-				window.location.reload();
-			    },
-			    error : function(results){
-			    alert(results.message);
-			    }   
-		})
-   	 });
-
+	    })
+     });
 
 $(document).ready(function() {
     $('#Select_form').submit(function(event) {
