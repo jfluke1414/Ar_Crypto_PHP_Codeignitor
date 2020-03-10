@@ -5,28 +5,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class User extends Crypto_Controller {
 
-	public function __construct()
-	{
-	    parent::__construct();
-	    $this->_header();
-	    $this->_header_dialog();
-	    $this->load->library('email');
-	}
+    public function __construct(){
+        parent::__construct();
+        $this->_header();
+        $this->_header_dialog();
+        $this->load->library('email');
+    }
 
-	public function login(){
-	    $this->load->view("login_view");
-	    $this->_footer();	
-	}
+    public function login(){
+        $this->load->view("login_view");
+        $this->_footer();	
+    }
 
-	
-	function login_end(){	  
-	    $username = $this->security->xss_clean($this->input->post('user_id'));
-	    $password = $this->security->xss_clean($this->input->post('user_pw'));   
-	    $this->load->model('Musers');
-	    $result = $this->Musers->login_check($username, $password);	    
+    function login_end(){	  
+        $username = $this->security->xss_clean($this->input->post('user_id'));
+        $password = $this->security->xss_clean($this->input->post('user_pw'));   
+        $this->load->model('Musers');
+        $result = $this->Musers->login_check($username, $password);	    
 
-	    echo json_encode(array('status' => 'success', 'message' => 'ss', 'data' => $result));	    
-	    exit;
+        echo json_encode(array('status' => 'success', 'message' => 'ss', 'data' => $result));	    
+        exit;
     }
 
     public function save_userInfo(){        
@@ -49,7 +47,6 @@ class User extends Crypto_Controller {
         exit;        
     }
     
-
     function save_data_selected_ajax(){
         $this->load->model("Musers");
         
@@ -91,8 +88,7 @@ class User extends Crypto_Controller {
         exit;
     }
 	
-    public function find_userInfo(){	
-		
+    public function find_userInfo(){			
 	$this->load->model('users');
 	$result = $this->users->get_users();
 		
@@ -105,8 +101,7 @@ class User extends Crypto_Controller {
 	$this->load->view("find_complete_id_view", $data);			
     }
 
-    public function find_pwInfo()
-    {		
+    public function find_pwInfo(){		
 	$id = $this->input->post('findpw_user_id');
 	$name = $this->input->post('findpw_user_name');	
 	if($id == null || $name == null){
@@ -210,8 +205,7 @@ class User extends Crypto_Controller {
     }
 
 	
-    public function check_captcha(){
-		
+    public function check_captcha(){		
         $captchaword = $this->session->userdata('captchaword');
 	$captcha_txt = $this->input->post('captcha');
 		
@@ -222,8 +216,7 @@ class User extends Crypto_Controller {
 	}
         exit;		
     }
-	
-	
+		
     public function request_Info(){	
         if(!$this->session->userdata('user_id')){
 	$captchaword = $this->session->userdata('captchaword');
