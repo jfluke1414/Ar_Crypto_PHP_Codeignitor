@@ -2,14 +2,13 @@
 
 class Manage extends Crypto_Controller {
 
-	public function __construct()
-	{
+	public function __construct(){
 	   parent::__construct();		
 	   $this->load->library('session');
 	   $this->_manageheader();
 	}
 
-	public function index(){		
+	public function index(){
 	   if($this->session->userdata('isadmin') == true){
 	      $this->_news_list();
 	   } else {
@@ -17,22 +16,19 @@ class Manage extends Crypto_Controller {
 	   }
 	}
 
-	public function write()
-	{
+	public function write(){
            $this->_login_chk();
 	   $this->load->view('/manage/write_view');
 	}
 	
-	public function _login_chk()
-	{		
+	public function _login_chk(){		
 	   if(!$this->session->userdata('isadmin')){
 	   	redirect('/Manage','location');
 		return true;
 	   }
 	}
 	
-	function login_end()
-	{
+	function login_end(){
 	   Header("Content-type: text/html; charset=UTF-8");
 		
 	   // Load the model
@@ -46,15 +42,14 @@ class Manage extends Crypto_Controller {
 		$msg = ".";
 		echo("<script>alert('$msg');history.back();</script>");
 		exit;
-	   }else{
+	   } else {
 		// If user did validate, 
 		// Send them to members area
 		redirect('/Manage/news_lists','location');
 	   }
 	}
 	
-	public function logout()
-	{
+	public function logout(){
 	   $this->session->sess_destroy();
 	   redirect('/Manage', 'location');
 	}
@@ -83,8 +78,7 @@ class Manage extends Crypto_Controller {
 	   exit;
 	}	
 	
-	public function del_rel()
-	{
+	public function del_rel(){
 	   $id = $this->input->post('post_id');
 	
 	   $this->load->model('Manages');
@@ -95,8 +89,7 @@ class Manage extends Crypto_Controller {
 	   exit;
 	}
 
-	public function del_inquiry()
-	{
+	public function del_inquiry(){
 	   $id = $this->input->post('post_id');
 		
 	   $this->load->model('Manages');
@@ -106,4 +99,4 @@ class Manage extends Crypto_Controller {
 	   echo json_encode(array('status' => 'success','message'=> $msg));
 	   exit;
 	}	
-}
+    }
