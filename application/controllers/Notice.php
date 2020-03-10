@@ -5,59 +5,49 @@ class Notice extends Crypto_Controller {
 
 	public function __construct()
 	{
-		parent::__construct();		
+	   parent::__construct();		
 	}
 	
-	public function Notice_1()
-	{		
-		
-		$id = $this->input->get('list_id');
-		$data['notice_id'] = $id;
-		$this->load->model('Notices');
+	public function Notice_1(){			
+	   $id = $this->input->get('list_id');
+	   $data['notice_id'] = $id;
+	   $this->load->model('Notices');
 
-		$pagenum = $this->uri->segment(3, 1);	
-		$outcnt = '5';				
+	   $pagenum = $this->uri->segment(3, 1);	
+	   $outcnt = '5';				
 		
-		$params = array();
-		$params['outcnt'] = $outcnt;
-		$params['pagenum'] = $pagenum;
-		$params['call'] = true;
+	   $params = array();
+	   $params['outcnt'] = $outcnt;
+	   $params['pagenum'] = $pagenum;
+	   $params['call'] = true;
 		
-		$result = $this->Notices->request_list($params);
-		$data['results'] = $result;
+	   $result = $this->Notices->request_list($params);
+	   $data['results'] = $result;
 		
-		$allcnt = $this->Notices->request_count_all();
+	   $allcnt = $this->Notices->request_count_all();
 			
-		$data['allcnt'] = $allcnt;
-		$data['pagenum'] = $pagenum;
-		$data['outcnt'] = $outcnt;
+	   $data['allcnt'] = $allcnt;
+	   $data['pagenum'] = $pagenum;
+	   $data['outcnt'] = $outcnt;
 		
-		$this->load->library('pagination');
-		$config['base_url'] = base_url().'Notice/Notice_1';
-		$config['total_rows'] = $allcnt;
-		$config['per_page'] = $outcnt;
-		$config['num_links'] = '4';
-		$config['uri_segment'] = '3';
-		$config['use_page_numbers'] = TRUE;
+	   $this->load->library('pagination');
+	   $config['base_url'] = base_url().'Notice/Notice_1';
+	   $config['total_rows'] = $allcnt;
+           $config['per_page'] = $outcnt;
+	   $config['num_links'] = '4';
+	   $config['uri_segment'] = '3';
+	   $config['use_page_numbers'] = TRUE;
 	
-		$config['full_tag_open'] = '<div id="pagination">';
-		$config['full_tag_close'] = '</div>';
+	   $config['full_tag_open'] = '<div id="pagination">';
+	   $config['full_tag_close'] = '</div>';
 		
-		$config['prev_link'] = '<img src="/assets/images/icon_left.png" width="25" height="25" alt="" style="vertical-align: middle;">';
-		$config['next_link'] = '<img src="/assets/images/icon_right.png" width="25" height="25" alt="" style="vertical-align: middle;">';
+	   $config['prev_link'] = '<img src="/assets/images/icon_left.png" width="25" height="25" alt="" style="vertical-align: middle;">';
+	   $config['next_link'] = '<img src="/assets/images/icon_right.png" width="25" height="25" alt="" style="vertical-align: middle;">';	
 		
+   	   $this->pagination->initialize($config);
 		
-		$this->pagination->initialize($config);
-		
-		$this->load->view('notice01_view', $data);	
-		$this->_footer();
+	   $this->load->view('notice01_view', $data);	
+	   $this->_footer();
 	}
-
-	public function security_news()
-	{
-		
-		
-	}
-	
 }
 
