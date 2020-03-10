@@ -4,127 +4,85 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Musers extends CI_Model {
 
-    function __construct()
-    {
+    function __construct(){
         parent::__construct();
-		$this->load->database();
+	$this->load->database();
     }
 	
-	
-	function login_check()
-    {
+    function login_check(){
     	$username = $this->security->xss_clean($this->input->post('user_id'));
-		$password = $this->security->xss_clean($this->input->post('user_pw'));
-		
-		$ecryp_pw = sha1($password);
-		
-
-		if(empty($username) || empty($password))
-			return false;
-		
+	$password = $this->security->xss_clean($this->input->post('user_pw'));		
+	$ecryp_pw = sha1($password);	
+            if(empty($username) || empty($password))
+	        return false;		
 		$this->db->where('user_id', $username);
 		$this->db->where('user_pw', $ecryp_pw);
-
 		$query = $this->db->get('user');
-        
-// 		var_dump($query->result());
-		
-		
-		if($query->num_rows() == 1)
-		{
-			$row = $query->row();
-			
-			$data = array(
-					'isuser' => true,
-					'user_id' => $row->user_id,
-					'user_name' => $row->user_name										
-					);
-			$this->session->set_userdata($data);
-			
-			return true;
-		}
-		return false;
+	
+	    if($query->num_rows() == 1)
+	    {
+	        $row = $query->row();
+		    $data = array(
+		    'isuser' => true,
+		    'user_id' => $row->user_id,
+		    'user_name' => $row->user_name										
+	        );
+	    $this->session->set_userdata($data);
+	    return true;
+	}
+	return false;
+    }
+
+    function add_users($ecryp_pw, $id, $name){	
+	$this->db->set('user_id', $id);
+	$this->db->set('user_pw', $ecryp_pw);
+	$this->db->set('user_name', $name);		
+	$this->db->set('regdate', 'NOW()', FALSE);	
+	$this->db->insert('user');
+    }	
+	
+    function check_users(){
+	$id = $this->input->post('user_id');
+	$this->db->where('user_id', $id);	
+	$query = $this->db->get('user');
+	return $query->result();		
     }
 	
+    function get_users(){	
+	$name = $this->input->post('findid_user_name');
+	$email = $this->input->post('findid_user_email');
+		
+	$this->db->where('name', $name);
+	$this->db->where('email', $email);			
+	$query = $this->db->get('user');
+	return $query->result();		
+    }	
 	
-    
-    
-    
-	function add_users($ecryp_pw, $id, $name){
-		
-		$this->db->set('user_id', $id);
-		$this->db->set('user_pw', $ecryp_pw);
-		$this->db->set('user_name', $name);		
-		$this->db->set('regdate', 'NOW()', FALSE);
-		
-		$this->db->insert('user');
+    function get_pw_user($name, $id){
+        $this->db->where('name', $name);
+	$this->db->where('id', $id);
+	$query = $this->db->get('user');
+	return $query->result();		
+    }	
 	
-	}
-	
-	
-	function check_users(){
-
-		$id = $this->input->post('user_id');
-		$this->db->where('user_id', $id);
-		
-		$query = $this->db->get('user');
-		return $query->result();
-		
-	}
-	
-	
-	function get_users(){
-		
-		
-		$name = $this->input->post('findid_user_name');
-		$email = $this->input->post('findid_user_email');
-		
-		$this->db->where('name', $name);
-		$this->db->where('email', $email);
-		
-		
-		$query = $this->db->get('user');
-		return $query->result();
-		
-	}
-	
-	
-	function get_pw_user($name, $id){
-		
-		
-
-		$this->db->where('name', $name);
-		$this->db->where('id', $id);
-		$query = $this->db->get('user');
-		return $query->result();
-		
-	}
-	
-	
-	function user_update_pw($id, $ecryp_pw)
-    {
+    function user_update_pw($id, $ecryp_pw){
     	$this->db->where('id', $id);
-    	$data = array(
-    		'pw' => $ecryp_pw
-    	);
-		$query = $this->db->update('user', $data);
-    }
+    	$data = array('pw' => $ecryp_pw);
+	$query = $this->db->update('user', $data);
+    }	
 	
-	
-	function update_userInfo($ecryp_pw)
-    {
-    	
+    function update_userInfo($ecryp_pw){
     	$id = $this->input->post("user_id");
-		$email = $this->input->post("user_email");
-		$phone = $this->input->post("user_phone");
+	$email = $this->input->post("user_email");
+	$phone = $this->input->post("user_phone");
 		
     	$this->db->where('id', $id);
     	$data = array(
-    		'pw' => $ecryp_pw,
-    		'email' => $email,
-    		'phone' => $phone
+    	    'pw' => $ecryp_pw,
+    	    'email' => $email,
+    	    'phone' => $phone
     	);
-		$query = $this->db->update('user', $data);
+	$query = $this->db->update('user', $data);
     }
 	
     function get_coin_kind(){
@@ -137,45 +95,34 @@ class Musers extends CI_Model {
         return $query->result();
     }
     
-	function get_userInfo($id){
-	    
-		$this->db->where('id', $id);
-		
-		$query = $this->db->get('user');
-		return $query->result();
-		
-	}
-	
-
-	function delete_userInfo($id)
-    {
-		$this->db->where('id', $id);
-		$this->db->delete('user');
+    function get_userInfo($id){	    
+	$this->db->where('id', $id);		
+	$query = $this->db->get('user');
+	return $query->result();		
     }
 
+    function delete_userInfo($id){
+	$this->db->where('id', $id);
+	$this->db->delete('user');
+    }
 
-	function save_request()
-    {
-    	
+    function save_request(){    	
     	$partner_name = $this->input->post("partner_name");
     	$user_name = $this->input->post("user_name");
     	$phone = $this->input->post("user_phone");
-		$email = $this->input->post("user_email");
-		$content = $this->input->post("request_textarea");
+	$email = $this->input->post("user_email");
+	$content = $this->input->post("request_textarea");
 		
-		$this->db->set('partner', $partner_name);
-		$this->db->set('name', $user_name);
-		$this->db->set('email', $email);
-		$this->db->set('phone', $phone);
-		$this->db->set('contents', $content);
-		$this->db->set('regdate', 'NOW()', FALSE);
-
-		$this->db->insert('request');
+	$this->db->set('partner', $partner_name);
+	$this->db->set('name', $user_name);
+	$this->db->set('email', $email);
+	$this->db->set('phone', $phone);
+	$this->db->set('contents', $content);
+	$this->db->set('regdate', 'NOW()', FALSE);
+	$this->db->insert('request');
     }
     
-    
     function save_user_coin(){
-
         $user_id = $this->session->userdata('user_id');
         $btc_count = $this->input->post('btc_count');
         $eth_count = $this->input->post('eth_count');
@@ -196,15 +143,11 @@ class Musers extends CI_Model {
         $this->db->set('dash_count', $dash_count);
         $this->db->set('pib_count', $pib_count);
         $this->db->set('qtum_count', $qtum_count);
-        $this->db->set('snt_count', $snt_count);
-        
-        $this->db->insert('user_coin');
-        
+        $this->db->set('snt_count', $snt_count);        
+        $this->db->insert('user_coin');        
     }
     
-    
-    function change_user_coin(){
-        
+    function change_user_coin(){        
         $user_id = $this->session->userdata('user_id');
         $btc_count = $this->input->post('btc_count');
         $eth_count = $this->input->post('eth_count');
@@ -226,39 +169,29 @@ class Musers extends CI_Model {
             'pib_count' => $pib_count,
             'qtum_count' => $qtum_count,
             'snt_count' => $snt_count
-        );
-        
+        );        
         $this->db->where('user_id', $user_id);
         $this->db->update('user_coin', $data);
-
     }
     
-    function user_coin_chk(){
-        
+    function user_coin_chk(){        
         $user_id = $this->session->userdata('user_id');
         $this->db->where('user_id', $user_id);
-        $query = $this->db->get('user_coin');
-        
+        $query = $this->db->get('user_coin');        
         return $query->result();
     }
     
-    function get_user_coin(){
-        
+    function get_user_coin(){        
         $user_id = $this->session->userdata('user_id');
         $this->db->where('user_id', $user_id);
-        $query = $this->db->get('user_coin');
-        
+        $query = $this->db->get('user_coin');        
         return $query->result();
     }
 
-	function paid_info($id){
-		
-		$this->db->where('userid', $id);
-		$this->db->where('resultcode', '00');
-		$query = $this->db->get('pay');
-		
-		return $query->result();
-		
-	}
-
+    function paid_info($id){		
+	$this->db->where('userid', $id);
+	$this->db->where('resultcode', '00');
+	$query = $this->db->get('pay');		
+	return $query->result();		
+    }
 }
