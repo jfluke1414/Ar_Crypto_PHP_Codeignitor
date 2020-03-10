@@ -2,19 +2,11 @@
 
 class Mfunctions extends CI_Model {
 
-    function __construct()
-    {
+    function __construct(){
         parent::__construct();
 		$this->load->database();
     }
-    
-		
-	
-	
-    function get_coininfo_selected()
-    {
-//         $btc = $this->input->post('btc_count');
-        
+    function get_coininfo_selected(){
         $this->db->select('currency, price, exchange_name, date(date) as date');
         
         $this->db->where('exchange_name', 'coinone');
@@ -48,11 +40,7 @@ class Mfunctions extends CI_Model {
         if(!is_null($this->input->post('snt_count'))){
             $this->db->or_where('currency', 'snt');
         }
-
-		$query = $this->db->get('coin_info');
+	$query = $this->db->get('coin_info');
         return $query->result();
-        
     }
-
-
 }
